@@ -1,0 +1,59 @@
+@import url('https://fonts.cdnfonts.com/css/sprite-graffiti');
+
+body{
+    margin: 0%;
+    background-color: #150d0f;
+}
+.Top{
+background-color: #150d0f;
+color: rgb(91, 0, 0);
+display: flex;
+align-items: center;
+justify-content: space-between;
+flex-direction: column;
+}
+h1{
+    font-family: 'Sprite Graffiti', sans-serif;
+   font-size:60px ;
+}
+
+h2{
+    font-style: bold;
+}
+
+img{
+    width: 500px;
+    height: auto;
+    border-radius:360 ;
+}
+
+.Mid{
+    background-color: #150d0f;
+    color: rgb(91, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+ul{
+    background-color: rgb(81, 81, 81);
+    padding: 12px;
+    border-radius: 12px;
+    list-style: none;
+    margin: 0;
+}
+li{
+    background-color: rgb(71, 71, 71);
+    color: rgb(162, 162, 162);
+    padding: 10px;
+    margin-bottom: 5px;
+}
+li:nth-child(even){
+    background-color: rgb(61, 61, 61);
+}
+
+p{
+    margin: 10px 0px 0 -5px ;
+    color: rgb(162, 162, 162);
+}
