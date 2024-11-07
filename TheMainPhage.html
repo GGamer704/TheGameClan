@@ -4,22 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sprite-graffiti">
     <title>The Syndicate</title>
 </head>
 <body>
-    <div class="Top">
-        <h1>The Syndicate</h1>
-        <img src="SimpleLogo.webp" alt="SimpleLogo">
-    </div>
-    <div class="Mid">
-        <h2>Members</h2>
+    <nav class="NavBar">
         <ul>
-            <li>Founder:GGamer704</li>
-            <li>Moderator: Chosen by Founder</li>
-            <li>Moderater: Chosen by Founder</li>
-        </ul> 
-        <p>Join the Syndicate to witness the downfall of order</p>
-        <p style="font-size: small;">Join the Syndicate to be featured on the list</p> 
-    </div>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#members">Members</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="Top" id="home">
+        <h1>The Syndicate</h1>
+        <img src="SimpleLogo.webp" alt="Simple Logo">
+    </header>
+
+    <section class="Mid" id="members">
+        <h2>Members</h2>
+        <div class="MemberList">
+            <div class="MemberCard">
+                <h3>GGamer704</h3>
+                <p>Founder</p>
+            </div>
+            <div class="MemberCard">
+                <h3>WorldLeader</h3>
+                <p>1st Member Moderator</p>
+            </div>
+            <div class="MemberCard">
+                <h3>Chosen Member 2</h3>
+                <p>Moderator</p>
+            </div>
+        </div>
+        <p>Join the Syndicate to witness the downfall of order.</p>
+        <p class="small-text">Join the Syndicate to be featured on the list.</p>
+    </section>
+
+    <footer class="Footer" id="contact">
+        <p>Connect with us on:
+            <a href="https://discord.com" target="_blank">Discord</a> |
+        </p>
+    </footer>
 </body>
 </html>
