@@ -67,7 +67,7 @@ img {
     gap: 15px;
 }
 
-.MemberCard-Founder {
+#Founder {
     background-color: rgb(255, 210, 0);
     border-radius: 12px;
     padding: 15px;
