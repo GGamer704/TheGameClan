@@ -67,6 +67,15 @@ img {
     gap: 15px;
 }
 
+.MemberCard-Founder {
+    background-color: gold ;
+    border-radius: 12px;
+    padding: 15px;
+    width: 200px;
+    color: #fff;
+    text-align: center;
+}
+
 .MemberCard {
     background-color: rgb(81, 81, 81);
     border-radius: 12px;
@@ -76,6 +85,9 @@ img {
     text-align: center;
 }
 
+.MemberCard-Founder h3 {
+   margin: 0; 
+}
 .MemberCard h3 {
     margin: 0;
 }
