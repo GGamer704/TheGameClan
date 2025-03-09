@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sprite-graffiti">
-    <link rel="icon" src="SimpleLogo.webp"
-
+    <link rel="icon" href="SimpleLogo.webp">
     <title>The Syndicate</title>
 </head>
 <body>
     <nav class="NavBar">
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#members">Members</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#home" aria-label="Home">Home</a></li>
+            <li><a href="#members" aria-label="Members">Members</a></li>
+            <li><a href="#events" aria-label="Events">Events</a></li>
+            <li><a href="#contact" aria-label="Contact">Contact</a></li>
         </ul>
     </nav>
 
@@ -32,10 +31,6 @@
                 <p>Founder</p>
             </div>
             <div class="MemberCard">
-                <h3>ShaneCyrus</h3>
-                <p>Moderator</p>
-            </div>
-            <div class="MemberCard">
                 <h3>Moderator</h3>
                 <p>Still to be chosen</p>
             </div>
@@ -44,10 +39,23 @@
         <p class="small-text">Join the Syndicate to be featured on the list.</p>
     </section>
 
+    <section class="AdminForm" id="add-admin">
+        <h2>Add New Admin</h2>
+        <form id="adminForm">
+            <label for="adminName">Name:</label>
+            <input type="text" id="adminName" name="adminName" required>
+            <label for="adminRole">Role:</label>
+            <input type="text" id="adminRole" name="adminRole" required>
+            <button type="submit">Add Admin</button>
+        </form>
+    </section>
+
     <footer class="Footer" id="contact">
         <p>Connect with us on:
-            <a href="https://discord.com" target="_blank">Discord</a> |
+            <a href="https://discord.com" target="_blank" aria-label="Discord">Discord</a> |
         </p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
