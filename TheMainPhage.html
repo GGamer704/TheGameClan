@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Syndicate - Gaming Clan">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sprite-graffiti">
     <link rel="icon" href="SimpleLogo.webp">
-    <title>The Syndicate</title>
+    <title>The Syndicate | Gaming Clan</title>
 </head>
 <body>
     <nav class="NavBar">
         <ul>
-            <li><a href="#home" aria-label="Home">Home</a></li>
+            <li><a href="#home" aria-label="Home">Top</a></li>
             <li><a href="#members" aria-label="Members">Members</a></li>
-            <li><a href="#events" aria-label="Events">Events</a></li>
-            <li><a href="#contact" aria-label="Contact">Contact</a></li>
+            <li><a href="#about" aria-label="About">About</a></li>
+            <li><a href="#contact" aria-label="Contact">Discord</a></li>
         </ul>
     </nav>
 
     <header class="Top" id="home">
-        <h1>The Syndicate</h1>
-        <img src="SimpleLogo.webp" alt="Simple Logo">
+        <div class="logo-container">
+            <h1>The Syndicate</h1>
+            <img src="SimpleLogo.webp" alt="The Syndicate Logo" class="pulse-logo">
+            <p class="tagline">Join the elite. Rule the game.</p>
+        </div>
     </header>
+
+    <section class="About" id="about">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <p>The Syndicate is an elite gaming clan formed by passionate gamers seeking glory and domination across multiple gaming platforms.</p>
+            <p>Join the Syndicate to witness the downfall of order and rise to the top of the leaderboards.</p>
+        </div>
+    </section>
 
     <section class="Mid" id="members">
         <h2>Members</h2>
@@ -30,30 +42,38 @@
                 <h3>GGamer704</h3>
                 <p>Founder</p>
             </div>
-            <div class="MemberCard">
-                <h3>Moderator</h3>
-                <p>Still to be chosen</p>
-            </div>
+            <!-- Other members will be loaded by JavaScript -->
         </div>
-        <p>Join the Syndicate to witness the downfall of order.</p>
-        <p class="small-text">Join the Syndicate to be featured on the list.</p>
+        <p class="join-text">Want to join? Connect with us on Discord!</p>
+        <p class="small-text">Members are featured on this elite list.</p>
     </section>
 
-    <section class="AdminForm" id="add-admin">
-        <h2>Add New Admin</h2>
-        <form id="adminForm">
-            <label for="adminName">Name:</label>
-            <input type="text" id="adminName" name="adminName" required>
-            <label for="adminRole">Role:</label>
-            <input type="text" id="adminRole" name="adminRole" required>
-            <button type="submit">Add Admin</button>
-        </form>
-    </section>
+    <details>
+        <summary>Add New Admin</summary>
+        <section class="AdminForm" id="add-admin">
+            <h2>Add New Admin</h2>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label for="adminName">Name:</label>
+                    <input type="text" id="adminName" name="adminName" required placeholder="Enter admin name">
+                </div>
+                <div class="form-group">
+                    <label for="adminRole">Role:</label>
+                    <input type="text" id="adminRole" name="adminRole" required placeholder="Enter admin role">
+                </div>
+                <button type="submit" class="submit-btn">Add Admin</button>
+            </form>
+        </section>
+    </details>
 
     <footer class="Footer" id="contact">
-        <p>Connect with us on:
-            <a href="https://discord.com" target="_blank" aria-label="Discord">Discord</a> |
-        </p>
+        <div class="footer-content">
+            <h3>Connect With Us</h3>
+            <div class="social-links">
+                <a href="https://discord.com" target="_blank" aria-label="Discord" class="discord-link">Discord</a>
+            </div>
+            <p class="copyright">© 2025 The Syndicate. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
