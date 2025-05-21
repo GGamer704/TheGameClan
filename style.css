@@ -1,170 +1,603 @@
 @import url('https://fonts.cdnfonts.com/css/sprite-graffiti');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
-body {
-    margin: 0;
-    background-color: #150d0f;
-    font-family: Arial, sans-serif;
-    color: rgb(162, 162, 162);
+:root {
+    --primary-dark: #0c0809;
+    --secondary-dark: #1a1013;
+    --clan-red: #b22222;
+    --clan-red-hover: #d42828;
+    --clan-gold: #ffd200;
+    --text-gray: #a2a2a2;
+    --text-light: #f5f5f5;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--primary-dark);
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: var(--text-gray);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: linear-gradient(to bottom, rgba(12, 8, 9, 0.95), rgba(12, 8, 9, 0.98)), 
+                      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23b22222" fill-opacity="0.05" d="M0 0h100v100H0z"/></svg>');
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--clan-red);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--clan-red-hover);
+}
+
+/* Navigation */
 .NavBar {
-    background-color: #1a1013;
-    padding: 10px;
+    background-color: rgba(26, 16, 19, 0.95);
+    padding: 15px;
     text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
 }
 
 .NavBar ul {
     list-style: none;
-    padding: 0;
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 40px;
 }
 
 .NavBar a {
     text-decoration: none;
-    color: rgb(162, 162, 162);
+    color: var(--text-gray);
     font-weight: bold;
+    font-size: 18px;
+    position: relative;
+    padding: 8px 0;
+}
+
+.NavBar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--clan-red);
+    transition: width 0.3s ease;
+}
+
+.NavBar a:hover::after,
+.NavBar a:focus::after {
+    width: 100%;
 }
 
 .NavBar a:hover,
 .NavBar a:focus {
-    color: #b22222;
+    color: var(--clan-gold);
     outline: none;
+    text-shadow: 0 0 8px rgba(255, 210, 0, 0.4);
 }
 
+/* Header */
 .Top {
     text-align: center;
-    padding: 20px;
-    background-color: #150d0f;
-    color: rgb(91, 0, 0);
+    padding: 150px 20px 70px;
+    background: radial-gradient(circle at center, rgba(26, 16, 19, 0.7), var(--primary-dark));
+    color: var(--clan-red);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-container {
+    position: relative;
+    z-index: 2;
+}
+
+.Top::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--clan-red), transparent);
+}
+
+.Top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at center, transparent 60%, rgba(178, 34, 34, 0.1));
+    z-index: 1;
 }
 
 h1 {
     font-family: 'Sprite Graffiti', sans-serif;
-    font-size: 60px;
+    font-size: 75px;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(178, 34, 34, 0.6), 0 0 30px rgba(178, 34, 34, 0.3);
+    letter-spacing: 3px;
+    position: relative;
+    display: inline-block;
+}
+
+h1::before {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 10px;
+    background-color: rgba(178, 34, 34, 0.2);
+    left: -10%;
+    bottom: -5px;
+    border-radius: 5px;
+}
+
+.tagline {
+    font-size: 20px;
+    color: var(--clan-gold);
+    margin-top: 20px;
+    font-weight: 500;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    letter-spacing: 1px;
 }
 
 h2 {
     font-size: 36px;
-    color: #b22222;
+    color: var(--clan-red);
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-img {
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--clan-red), transparent);
+}
+
+img.pulse-logo {
     width: 100%;
-    max-width: 500px;
+    max-width: 300px;
     height: auto;
-    border-radius: 50%;
+    margin-bottom: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.Mid {
-    padding: 20px;
+/* About section */
+.About {
+    padding: 70px 20px;
     text-align: center;
+    background-color: rgba(26, 16, 19, 0.5);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 18px;
+    color: var(--text-light);
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 3px solid var(--clan-red);
+    border-right: 3px solid var(--clan-red);
+}
+
+.about-content p {
+    margin-bottom: 15px;
+}
+
+/* Details (Accordion) */
+details {
+    background-color: rgba(26, 16, 19, 0.8);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 40px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    border: 1px solid rgba(178, 34, 34, 0.3);
+    transition: all 0.4s ease;
+}
+
+details:hover {
+    box-shadow: 0 8px 25px rgba(178, 34, 34, 0.2);
+}
+
+details[open] {
+    background-color: rgba(26, 16, 19, 0.95);
+    border: 1px solid rgba(178, 34, 34, 0.5);
+}
+
+details summary {
+    font-weight: bold;
+    color: var(--clan-gold);
+    padding: 10px;
+    position: relative;
+    font-size: 18px;
+    outline: none;
+}
+
+details summary:hover {
+    color: var(--clan-red-hover);
+}
+
+details summary::marker {
+    color: var(--clan-red);
+}
+
+/* Members Section */
+.Mid {
+    padding: 70px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.join-text {
+    font-size: 20px;
+    color: var(--text-light);
+    margin-top: 30px;
 }
 
 .MemberList {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 30px;
+    margin: 40px 0;
 }
 
 #Founder {
-    background-color: rgb(255, 210, 0);
+    background: linear-gradient(145deg, var(--clan-gold), #e6bc00);
     border-radius: 12px;
-    padding: 15px;
-    width: 200px;
-    color: #fff;
+    padding: 30px 20px;
+    width: 240px;
+    color: #000;
     text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 210, 0, 0.2);
+    transform: translateY(0);
+    position: relative;
+    overflow: hidden;
+}
+
+#Founder::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%);
+    transform: rotate(30deg);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+#Founder:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 210, 0, 0.3);
+}
+
+#Founder:hover::before {
+    opacity: 1;
+}
+
+#Founder h3, #Founder p {
+    position: relative;
+    z-index: 2;
 }
 
 .MemberCard {
-    background-color: rgb(81, 81, 81);
+    background: linear-gradient(145deg, #444, #222);
     border-radius: 12px;
-    padding: 15px;
-    width: 200px;
+    padding: 30px 20px;
+    width: 240px;
     color: #fff;
     text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(0);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(178, 34, 34, 0.2);
 }
 
-.MemberCard-Founder h3 {
-   margin: 0; 
+.MemberCard::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(178,34,34,0.2) 0%, rgba(178,34,34,0) 60%);
+    transform: rotate(30deg);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.6s ease;
 }
+
+.MemberCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(178, 34, 34, 0.2);
+    border: 1px solid rgba(178, 34, 34, 0.5);
+}
+
+.MemberCard:hover::before {
+    opacity: 1;
+}
+
 .MemberCard h3 {
-    margin: 0;
+    margin: 0 0 15px;
+    font-size: 22px;
+    position: relative;
+    z-index: 2;
 }
 
-.Footer {
-    background-color: #150d0f;
-    color: rgb(91, 0, 0);
-    text-align: center;
-    padding: 15px;
+.MemberCard p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
 }
 
-.Footer a {
-    color: #b22222;
-    text-decoration: none;
+.delete-button {
+    background-color: var(--clan-red);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-.Footer a:hover,
-.Footer a:focus {
-    text-decoration: underline;
-    outline: none;
+.delete-button:hover {
+    background-color: var(--clan-red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
+.small-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* Admin Form */
 .AdminForm {
-    padding: 20px;
+    padding: 30px 20px;
     text-align: center;
 }
 
 .AdminForm form {
     display: inline-block;
     text-align: left;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(178, 34, 34, 0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
 }
 
 .AdminForm label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    color: var(--clan-gold);
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .AdminForm input {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 15px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background-color: rgba(34, 34, 34, 0.8);
+    color: white;
+    font-size: 16px;
 }
 
-.AdminForm button {
-    padding: 10px 20px;
-    background-color: #b22222;
-    color: #fff;
+.AdminForm input:focus {
+    border-color: var(--clan-red);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.3);
+    background-color: rgba(34, 34, 34, 1);
+}
+
+.AdminForm input::placeholder {
+    color: #666;
+}
+
+.submit-btn {
+    padding: 15px 30px;
+    background-color: var(--clan-red);
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    display: block;
+    width: 100%;
+    margin-top: 10px;
 }
 
-.AdminForm button:hover {
-    background-color: #a11d1d;
+.submit-btn:hover {
+    background-color: var(--clan-red-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer */
+.Footer {
+    background-color: rgba(26, 16, 19, 0.95);
+    color: var(--text-gray);
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+    border-top: 1px solid rgba(178, 34, 34, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.Footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, var(--clan-red), transparent);
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.Footer h3 {
+    color: var(--clan-red);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.social-links {
+    margin: 20px 0;
+}
+
+.Footer a {
+    color: var(--clan-gold);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    position: relative;
+    padding: 8px 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}
+
+.Footer a:hover,
+.Footer a:focus {
+    color: var(--text-light);
+    background-color: var(--clan-red);
+    text-decoration: none;
+    outline: none;
+    box-shadow: 0 5px 15px rgba(178, 34, 34, 0.4);
+    transform: translateY(-3px);
+}
+
+.copyright {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Animation for the logo */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .NavBar ul {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
+    }
+    
+    .NavBar a {
+        font-size: 16px;
+        padding: 5px 0;
     }
 
     h1 {
-        font-size: 40px;
+        font-size: 50px;
+    }
+    
+    h2 {
+        font-size: 28px;
     }
 
-    .MemberCard {
+    .Top {
+        padding: 120px 15px 50px;
+    }
+    
+    .MemberCard, #Founder {
         width: 100%;
-        max-width: 250px;
+        max-width: 280px;
     }
 
-    .Top, .Mid, .AdminForm {
-        padding: 10px;
+    .Top, .Mid, .AdminForm, .About {
+        padding: 50px 15px;
+    }
+    
+    details {
+        width: 90%;
+    }
+    
+    .tagline {
+        font-size: 16px;
+    }
+    
+    .about-content {
+        padding: 20px;
+        font-size: 16px;
+    }
+    
+    img.pulse-logo {
+        max-width: 250px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
