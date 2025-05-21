@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('adminForm').addEventListener('submit', function(event) {
         event.preventDefault();
-
+        
+        // Just use direct comparison for simplicity
+        const correctPassword = 'GGamer206'; // Keep the original password
         const password = prompt('Enter the admin password:');
-        if (password !== 'GGamer206') {
+        
+        if (password !== correctPassword) {
             alert('Incorrect password. You are not authorized to add new admins.');
             return;
         }
@@ -35,8 +38,9 @@ function addAdmin(name, role) {
     deleteButton.textContent = 'Delete';
     deleteButton.classList.add('delete-button');
     deleteButton.addEventListener('click', function() {
+        const correctPassword = 'GGamer206';
         const password = prompt('Enter the admin password:');
-        if (password !== 'GGamer206') {
+        if (password !== correctPassword) {
             alert('Incorrect password. You are not authorized to delete admins.');
             return;
         }
