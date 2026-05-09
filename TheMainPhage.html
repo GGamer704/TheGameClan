@@ -3,79 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Syndicate - Gaming Clan">
+    <meta name="description" content="The Viltrum Syndicate - The Overlord and HighCouncil">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sprite-graffiti">
-    <link rel="icon" href="SimpleLogo.webp">
-    <title>The Syndicate | Gaming Clan</title>
+    <link rel="icon" href="The Viltrum Syndicate - Jpeg.png">
+    <title>The Viltrum Syndicate | The Overlord and HighCouncil</title>
 </head>
 <body>
-    <nav class="NavBar">
-        <ul>
-            <li><a href="#home" aria-label="Home">Top</a></li>
-            <li><a href="#members" aria-label="Members">Members</a></li>
-            <li><a href="#about" aria-label="About">About</a></li>
-            <li><a href="#contact" aria-label="Contact">Discord</a></li>
-        </ul>
+    <nav class="NavBar" aria-label="Primary">
+        <div class="nav-shell">
+            <ul>
+                <li><a href="#home" aria-label="Home">Top</a></li>
+                <li><a href="#categories" aria-label="Categories">Categories</a></li>
+                <li><a href="#members" aria-label="Roster">Roster</a></li>
+                <li><a href="#info" aria-label="Info">Info</a></li>
+                <li><a href="#about" aria-label="About">About</a></li>
+                <li><a href="http://localhost:3000" aria-label="Clan Chat" target="_blank" rel="noreferrer">Chat</a></li>
+                <li><a href="#contact" aria-label="Contact">Discord</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <header class="Top" id="home">
-        <div class="logo-container">
-            <h1>The Syndicate</h1>
-            <img src="SimpleLogo.webp" alt="The Syndicate Logo" class="pulse-logo">
-            <p class="tagline">Join the elite. Rule the game.</p>
-        </div>
-    </header>
-
-    <section class="About" id="about">
-        <h2>About Us</h2>
-        <div class="about-content">
-            <p>The Syndicate is an elite gaming clan formed by passionate gamers seeking glory and domination across multiple gaming platforms.</p>
-            <p>Join the Syndicate to witness the downfall of order and rise to the top of the leaderboards.</p>
-        </div>
-    </section>
-
-    <section class="Mid" id="members">
-        <h2>Members</h2>
-        <div class="MemberList">
-            <div class="MemberCard" id="Founder">
-                <h3>GGamer704</h3>
-                <p>Founder</p>
+    <main>
+        <header class="Top" id="home">
+            <div class="logo-container hero-card">
+                <p class="eyebrow">Clan hierarchy</p>
+                <h1>The Viltrum Syndicate</h1>
+                <img src="The Viltrum Syndicate - Jpeg.png" alt="The Viltrum Syndicate Logo" class="pulse-logo">
+                <p class="tagline">One path to the top</p>
+                <p class="hero-copy">A focused clan structure with strong leadership, clean roles, and a tighter layout that keeps everything clear.</p>
+                <div class="hero-actions">
+                    <a href="#categories" class="action-link primary-action">View Roles</a>
+                    <a href="#members" class="action-link secondary-action">See Roster</a>
+                    <a href="http://localhost:3000" class="action-link secondary-action" target="_blank" rel="noreferrer">Open Clan Chat</a>
+                    <a href="#contact" class="action-link secondary-action">Join Discord</a>
+                </div>
             </div>
-            <!-- Other members will be loaded by JavaScript -->
-        </div>
-        <p class="join-text">Want to join? Connect with us on Discord!</p>
-        <p class="small-text">Members are featured on this elite list.</p>
-    </section>
+        </header>
 
-    <details>
-        <summary>Add New Admin</summary>
-        <section class="AdminForm" id="add-admin">
-            <h2>Add New Admin</h2>
-            <form id="adminForm">
-                <div class="form-group">
-                    <label for="adminName">Name:</label>
-                    <input type="text" id="adminName" name="adminName" required placeholder="Enter admin name">
+        <section class="About" id="about">
+            <div class="section-shell split-shell">
+                <div class="section-heading left-align">
+                    <h2>The Syndicate goal</h2>
+                    <p>Become the highest clan in the game.</p>
                 </div>
-                <div class="form-group">
-                    <label for="adminRole">Role:</label>
-                    <input type="text" id="adminRole" name="adminRole" required placeholder="Enter admin role">
+                <div class="about-content">
+                    <p>The current goal of The Syndicate is to become the highest rated clan in the categories of Gang and Gang Slow</p>
                 </div>
-                <button type="submit" class="submit-btn">Add Admin</button>
-            </form>
+            </div>
         </section>
-    </details>
+
+        <section class="CategorySection" id="categories">
+            <div class="section-shell">
+                <div class="section-heading">
+                    <h2>Roles</h2>
+                    <p>Pick the lane that defines the structure of the clan.</p>
+                </div>
+                <div class="CategoryGrid">
+                    <article class="CategoryCard OverlordCard">
+                        <span class="category-badge">Primary Rule</span>
+                        <h3>Owners</h3>
+                        <p class="category-copy">The top command. Owners set direction, approve major decisions, and keep the whole clan aligned.</p>
+                        <ul class="category-list">
+                            <li>Final authority</li>
+                            <li>Clan-wide strategy</li>
+                            <li>Leadership decisions</li>
+                        </ul>
+                    </article>
+
+                    <article class="CategoryCard CouncilCard">
+                        <span class="category-badge">Support Chain</span>
+                        <h3>High Council</h3>
+                        <p class="category-copy">Trusted advisors and tactical leaders who organize events, support members, and help carry out the main vision.</p>
+                        <ul class="category-list">
+                            <li>Event planning</li>
+                            <li>Member support</li>
+                            <li>Clan Wars participants</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="MembersSection" id="members">
+            <div class="section-shell">
+                <div class="section-heading">
+                    <h2>Leadership Roster</h2>
+                    <p>Verified owner and high council records pulled from the leadership accounts you provided.</p>
+                </div>
+                <article class="RosterCard OverlordCard roster-showcase">
+                    <div class="roster-intro">
+                        <span class="category-badge">Command Records</span>
+                        <h3>Verified Leadership</h3>
+                        <p class="category-copy">This section now uses the real leadership profile data instead of placeholder names, keeping the page focused on owners and top command only.</p>
+                    </div>
+                    <div class="OwnerGrid">
+                        <article class="OwnerTile">
+                            <span class="owner-rank">Owner</span>
+                            <h4>GGamer</h4>
+                            <p class="owner-handle">@GGamer704</p>
+                            <dl class="owner-meta">
+                                <div>
+                                    <dt>Best Rating</dt>
+                                    <dd>2108.095</dd>
+                                </div>
+                                <div>
+                                    <dt>Top Queue</dt>
+                                    <dd>Solo Slow</dd>
+                                </div>
+                            </dl>
+                        </article>
+                        <article class="OwnerTile">
+                            <span class="owner-rank">Owner</span>
+                            <h4>SirZayn</h4>
+                            <p class="owner-handle">@SirZayn</p>
+                            <dl class="owner-meta">
+                                <div>
+                                    <dt>Best Rating</dt>
+                                    <dd>2500.542</dd>
+                                </div>
+                                <div>
+                                    <dt>Top Queue</dt>
+                                    <dd>Gang Slow</dd>
+                                </div>
+                            </dl>
+                        </article>
+                        <article class="OwnerTile">
+                            <span class="owner-rank">Owner</span>
+                            <h4>DaltoniusAurelius</h4>
+                            <p class="owner-handle">@Daltonvee</p>
+                            <dl class="owner-meta">
+                                <div>
+                                    <dt>Best Rating</dt>
+                                    <dd>1671.801</dd>
+                                </div>
+                                <div>
+                                    <dt>Top Queue</dt>
+                                    <dd>Solo Slow</dd>
+                                </div>
+                            </dl>
+                        </article>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="InfoSection" id="info">
+            <div class="section-shell">
+                <div class="section-heading">
+                    <h2>Info</h2>
+                    <p>Simple rules that keep the structure sharp and easy to understand.</p>
+                </div>
+                <div class="InfoGrid">
+                    <div class="InfoCard">
+                        <h3>Purpose</h3>
+                        <p>Every role exists to keep the clan organized, active, and ready for the next match.</p>
+                    </div>
+                    <div class="InfoCard">
+                        <h3>How It Works</h3>
+                        <p>The Owners make the big decision on The Syndicate Goals, Clan Wars, and Aliances. High Council handles coordination and keeps the clan moving.</p>
+                    </div>
+                    <div class="InfoCard">
+                        <h3>Join Path</h3>
+                        <p>New members start by connecting with the Owners or High Council for membership and proving they can work with the clan structure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer class="Footer" id="contact">
         <div class="footer-content">
             <h3>Connect With Us</h3>
             <div class="social-links">
-                <a href="https://discord.com" target="_blank" aria-label="Discord" class="discord-link">Discord</a>
+                <a href="http://localhost:3000" target="_blank" rel="noreferrer" aria-label="Clan Chat" class="discord-link">Clan Chat</a>
+                <a href="https://discord.com" target="_blank" rel="noreferrer" aria-label="Discord" class="discord-link">Discord</a>
             </div>
-            <p class="copyright">© 2025 The Syndicate. All rights reserved.</p>
+            <p class="copyright">(c) 2025 The Game Clan. All rights reserved. Start the chat with <code>npm start</code> inside <code>clan-chat</code>.</p>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>

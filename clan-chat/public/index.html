@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clan Chat</title>
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sprite-graffiti">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --bg: #090607;
+      --bg-soft: #120c0f;
+      --panel: rgba(20, 14, 17, 0.9);
+      --panel-strong: rgba(26, 18, 22, 0.96);
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #efe7dc;
+      --muted: #b9aa9f;
+      --muted-strong: #8f7f76;
+      --red: #c8322d;
+      --red-soft: rgba(200, 50, 45, 0.16);
+      --gold: #f4c84f;
+      --gold-soft: rgba(244, 200, 79, 0.15);
+      --success: #9fe2b0;
+      --danger: #ff9f9f;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Montserrat", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(200, 50, 45, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(244, 200, 79, 0.11), transparent 34%),
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06), transparent 26%),
+        linear-gradient(180deg, #0d090b 0%, #090607 100%);
+      overflow-x: hidden;
+      padding: 90px 24px 24px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 85%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a,
+    input {
+      transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .NavBar {
+      position: fixed;
+      top: 12px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0 14px;
+    }
+
+    .nav-shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(14, 10, 12, 0.72);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    .NavBar ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .NavBar a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 13px;
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .NavBar a:hover,
+    .NavBar a:focus-visible {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+    }
+
+    .shell {
+      width: min(860px, 100%);
+      min-height: min(82vh, 720px);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto auto;
+      background:
+        radial-gradient(circle at top, rgba(200, 50, 45, 0.24), transparent 42%),
+        radial-gradient(circle at bottom, rgba(244, 200, 79, 0.08), transparent 38%),
+        linear-gradient(180deg, rgba(23, 15, 18, 0.96), rgba(12, 9, 11, 0.98));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .intro {
+      padding: 24px 24px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .intro h1 {
+      margin: 0 0 8px;
+      font-family: "Sprite Graffiti", "Montserrat", sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 0.96;
+      letter-spacing: 0.04em;
+      color: #fff4ea;
+      text-shadow: 0 0 24px rgba(200, 50, 45, 0.32);
+    }
+
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 560px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(244, 200, 79, 0.14);
+      background: var(--gold-soft);
+      color: var(--gold);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .room-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    label {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    input, button { font: inherit; }
+
+    input {
+      width: 100%;
+      margin-top: 6px;
+      padding: 13px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus {
+      border-color: rgba(244, 200, 79, 0.7);
+      box-shadow: 0 0 0 3px rgba(244, 200, 79, 0.12);
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 14px 16px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--gold), #ffd86d);
+      color: #140d10;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 16px 34px rgba(244, 200, 79, 0.18);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .tips {
+      padding: 0 24px 18px;
+      color: var(--muted-strong);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .chat-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .chat-head h2 {
+      margin: 0 0 6px;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .chat-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .online {
+      color: var(--success);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .feed {
+      min-height: 0;
+      padding: 18px 24px;
+      overflow-y: auto;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      background:
+        radial-gradient(circle at top right, rgba(200, 50, 45, 0.09), transparent 32%),
+        linear-gradient(180deg, rgba(10, 7, 9, 0.35), rgba(10, 7, 9, 0.15));
+    }
+
+    .empty {
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .message {
+      max-width: min(78%, 620px);
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at top right, rgba(200, 50, 45, 0.12), transparent 38%),
+        linear-gradient(180deg, var(--panel-strong), var(--panel));
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .message.me {
+      margin-left: auto;
+      background:
+        radial-gradient(circle at top left, rgba(244, 200, 79, 0.18), transparent 34%),
+        linear-gradient(180deg, rgba(40, 26, 18, 0.98), rgba(20, 14, 17, 0.98));
+      border-color: rgba(244, 200, 79, 0.24);
+    }
+
+    .message.system {
+      max-width: 100%;
+      justify-self: center;
+      text-align: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted-strong);
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .user {
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .time {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .composer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 18px 24px 24px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .composer input {
+      margin-top: 0;
+    }
+
+    .status {
+      padding: 0 24px 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    @media (max-width: 840px) {
+      body {
+        padding: 102px 14px 18px;
+      }
+
+      .room-form {
+        grid-template-columns: 1fr;
+      }
+
+      .room-form button {
+        width: 100%;
+      }
+
+      .message {
+        max-width: 100%;
+      }
+
+      .composer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .NavBar {
+        top: 10px;
+        padding-inline: 10px;
+      }
+
+      .nav-shell {
+        padding: 8px 10px;
+        border-radius: 24px;
+      }
+
+      .NavBar a {
+        min-height: 32px;
+        padding: 0 10px;
+        font-size: 0.74rem;
+      }
+
+      .intro,
+      .room-form,
+      .tips,
+      .chat-head,
+      .feed,
+      .composer {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="NavBar" aria-label="Primary">
+    <div class="nav-shell">
+      <ul>
+        <li><a href="http://localhost:3000">Chat</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="shell">
+      <header class="intro">
+        <div class="badge">Live WebSocket Room</div>
+        <h1>Clan Chat</h1>
+        <p>Pick a room name, choose your nickname, and chat live with the rest of the clan.</p>
+      </header>
+
+      <form class="room-form" id="joinForm">
+        <label>
+          Nickname
+          <input id="nickname" name="nickname" maxlength="24" placeholder="GGamer" required>
+        </label>
+
+        <label>
+          Room
+          <input id="room" name="room" maxlength="24" placeholder="viltrum" value="viltrum" required>
+        </label>
+
+        <button type="submit" id="joinButton">Join Room</button>
+      </form>
+
+      <div class="tips">
+        Messages are shared only with people in the same room. Open this page in two tabs to test it quickly.
+      </div>
+
+      <header class="chat-head">
+        <div>
+          <h2 id="roomTitle">Not connected</h2>
+          <p id="roomSubtitle">Join a room to start chatting.</p>
+        </div>
+        <div class="online" id="onlineCount">0 online</div>
+      </header>
+
+      <div class="feed" id="feed">
+        <div class="empty" id="emptyState">No messages yet. Join a room and send the first one.</div>
+      </div>
+
+      <div class="status" id="status">Waiting to join a room.</div>
+
+      <form class="composer" id="messageForm">
+        <input id="messageInput" maxlength="400" placeholder="Type your message..." disabled>
+        <button type="submit" id="sendButton" disabled>Send</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const joinForm = document.getElementById('joinForm');
+    const messageForm = document.getElementById('messageForm');
+    const nicknameInput = document.getElementById('nickname');
+    const roomInput = document.getElementById('room');
+    const messageInput = document.getElementById('messageInput');
+    const joinButton = document.getElementById('joinButton');
+    const sendButton = document.getElementById('sendButton');
+    const feed = document.getElementById('feed');
+    const emptyState = document.getElementById('emptyState');
+    const statusEl = document.getElementById('status');
+    const onlineCountEl = document.getElementById('onlineCount');
+    const roomTitle = document.getElementById('roomTitle');
+    const roomSubtitle = document.getElementById('roomSubtitle');
+
+    let socket = null;
+    let currentNickname = '';
+
+    function setStatus(text, isError) {
+      statusEl.textContent = text;
+      statusEl.classList.toggle('error', Boolean(isError));
+    }
+
+    function formatTime(ts) {
+      return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function clearEmpty() {
+      if (emptyState && emptyState.isConnected) {
+        emptyState.remove();
+      }
+    }
+
+    function addMessage(data) {
+      clearEmpty();
+
+      const item = document.createElement('article');
+      item.className = 'message';
+
+      if (data.type === 'system') {
+        item.classList.add('system');
+        item.textContent = data.text;
+      } else {
+        if (data.user === currentNickname) {
+          item.classList.add('me');
+        }
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+
+        const user = document.createElement('span');
+        user.className = 'user';
+        user.textContent = data.user;
+
+        const time = document.createElement('span');
+        time.className = 'time';
+        time.textContent = formatTime(data.ts);
+
+        const text = document.createElement('div');
+        text.textContent = data.text;
+
+        meta.append(user, time);
+        item.append(meta, text);
+      }
+
+      feed.appendChild(item);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function closeSocket() {
+      if (!socket) {
+        return;
+      }
+
+      socket.onclose = null;
+      socket.close();
+      socket = null;
+    }
+
+    if (location.protocol === 'file:') {
+      setStatus('Run npm start in clan-chat, then open http://localhost:3000. This page cannot chat when opened directly as a file.', true);
+      joinButton.disabled = true;
+    }
+
+    joinForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const nickname = nicknameInput.value.trim();
+      const room = roomInput.value.trim().toLowerCase();
+
+      if (!nickname || !room) {
+        setStatus('Nickname and room are required.', true);
+        return;
+      }
+
+      closeSocket();
+      currentNickname = nickname;
+      roomTitle.textContent = '#' + room;
+      roomSubtitle.textContent = 'Connected as ' + nickname;
+      setStatus('Connecting...');
+      joinButton.disabled = true;
+      feed.innerHTML = '';
+      onlineCountEl.textContent = '0 online';
+
+      const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      socket = new WebSocket(protocol + '//' + location.host);
+
+      socket.addEventListener('open', function () {
+        socket.send(JSON.stringify({ type: 'join', room: room, nickname: nickname }));
+        messageInput.disabled = false;
+        sendButton.disabled = false;
+        joinButton.disabled = false;
+        messageInput.focus();
+        setStatus('Connected. Messages are live.');
+      });
+
+      socket.addEventListener('message', function (event) {
+        let data;
+
+        try {
+          data = JSON.parse(event.data);
+        } catch {
+          return;
+        }
+
+        if (data.type === 'online') {
+          onlineCountEl.textContent = data.count + ' online';
+          return;
+        }
+
+        if (data.type === 'system' || data.type === 'message') {
+          addMessage(data);
+        }
+      });
+
+      socket.addEventListener('close', function () {
+        messageInput.disabled = true;
+        sendButton.disabled = true;
+        joinButton.disabled = false;
+        setStatus('Disconnected from chat.', true);
+      });
+
+      socket.addEventListener('error', function () {
+        setStatus('Could not connect to the chat server.', true);
+      });
+    });
+
+    messageForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const text = messageInput.value.trim();
+      if (!text || !socket || socket.readyState !== WebSocket.OPEN) {
+        return;
+      }
+
+      socket.send(JSON.stringify({ type: 'message', text: text }));
+      messageInput.value = '';
+    });
+  </script>
+</body>
+</html>
