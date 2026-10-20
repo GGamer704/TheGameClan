@@ -203,16 +203,37 @@ function renderPlayers(results, unresolved) {
 }
 
 function renderClan(standings) {
-  const rows = standings.map(({ cat, position, total, limit, rating, games, updated, error }) => {
-    let pos;
-    if (error) pos = '<span class="clan-unranked">Unavailable</span>';
-    else if (position == null) pos = `<span class="clan-unranked">${total ? `Outside top ${limit}` : 'Unranked'}</span>`;
-    else pos = `${medal(position - 1)}<span class="clan-of">of ${total}</span>`;
-    const num = (v, f = (x) => x) => Number.isFinite(v) ? f(v) : '—';
-    return `<tr><td class="clan-cat">${esc(cat.label)}</td><td><span class="clan-pos">${pos}</span></td><td class="num">${num(rating, fmt)}</td><td class="num">${num(games)}</td><td class="rank-date">${esc(formatUpdated(updated))}</td></tr>`;
+  const cards = standings.map(({ cat, position, total, limit, rating, games, updated, error }, index) => {
+    const status = error
+      ? { label: 'Unavailable', className: 'is-unavailable' }
+      : position == null
+        ? { label: total ? `Outside top ${limit}` : 'Unranked', className: 'is-unranked' }
+        : { label: position === 1 ? 'Rank #1' : position <= 3 ? 'Top 3' : 'Ranked', className: position <= 3 ? 'is-top-three' : 'is-ranked' };
+    const value = (v, format = (x) => x) => Number.isFinite(v) ? format(v) : '—';
+    const rank = position == null ? '—' : `#${position}`;
+    const clanCount = value(total, (count) => count.toLocaleString());
+    return `
+      <article class="clan-ladder-card ${status.className}">
+        <header class="clan-ladder-head">
+          <div class="clan-ladder-category">
+            <span class="clan-ladder-index">${String(index + 1).padStart(2, '0')}</span>
+            <h4>${esc(cat.label)}</h4>
+          </div>
+          <span class="clan-ladder-status">${status.label}</span>
+        </header>
+        <div class="clan-ladder-position">
+          <span class="clan-ladder-label">Current position</span>
+          <strong>${rank}</strong>
+          <span class="clan-ladder-total">${position == null ? 'on this ladder' : `of ${clanCount} clans`}</span>
+        </div>
+        <dl class="clan-ladder-stats">
+          <div><dt>Rating</dt><dd>${value(rating, fmt)}</dd></div>
+          <div><dt>Games</dt><dd>${value(games, (count) => count.toLocaleString())}</dd></div>
+        </dl>
+        <p class="clan-ladder-updated"><span>Rating updated</span>${esc(formatUpdated(updated))}</p>
+      </article>`;
   }).join('');
-  $('#clan-table').innerHTML = `
-    <div class="rank-scroll"><table class="rank-table clan-standings"><thead><tr><th>Category</th><th>Position</th><th class="num-head">Rating</th><th class="num-head">Games</th><th>Rating Updated</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  $('#clan-table').innerHTML = `<div class="clan-standings-grid">${cards}</div>`;
 }
 
 let resolvedRoster;

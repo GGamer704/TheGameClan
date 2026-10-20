@@ -15,7 +15,15 @@
     --gold: #f4c84f;
     --gold-soft: rgba(244, 200, 79, 0.15);
     --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
-    --radius: 6px;
+
+    /* Square corners everywhere */
+    --radius: 0;
+
+    /* Fluid spacing: scales smoothly between small phones and desktop */
+    --gutter: clamp(14px, 4vw, 32px);
+    --pad: clamp(16px, 3.5vw, 24px);
+    --gap: clamp(12px, 2.5vw, 18px);
+    --nav-offset: 84px;
 }
 
 * {
@@ -24,16 +32,20 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 92px;
+    scroll-padding-top: var(--nav-offset);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
+    min-height: 100dvh;
     color: var(--text);
     font-family: 'Montserrat', Arial, sans-serif;
     line-height: 1.65;
     overflow-x: hidden;
+    overflow-wrap: break-word;
     background:
         radial-gradient(circle at top left, rgba(200, 50, 45, 0.18), transparent 30%),
         radial-gradient(circle at top right, rgba(244, 200, 79, 0.11), transparent 34%),
@@ -52,11 +64,13 @@ body::before {
         linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
     background-size: 64px 64px;
     mask-image: radial-gradient(circle at center, black 45%, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 85%);
 }
 
 img {
     display: block;
     max-width: 100%;
+    height: auto;
 }
 
 a {
@@ -69,18 +83,24 @@ a {
     transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
 }
 
+button {
+    border-radius: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
 *:focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 3px;
 }
 
+/* ===== Navigation ===== */
 .NavBar {
     position: fixed;
-    top: 12px;
+    top: max(12px, env(safe-area-inset-top));
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 0 14px;
+    padding: 0 var(--gutter);
 }
 
 .nav-shell {
@@ -88,8 +108,9 @@ a {
     margin: 0 auto;
     padding: 10px 14px;
     border: 1px solid var(--line);
-    border-radius: 12px;
-    background: rgba(14, 10, 12, 0.72);
+    border-radius: 0;
+    background: rgba(14, 10, 12, 0.78);
+    -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
 }
@@ -109,14 +130,15 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 36px;
-    padding: 0 13px;
-    border-radius: 10px;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 0;
     color: var(--muted);
     font-size: 0.84rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .NavBar a:hover,
@@ -131,18 +153,20 @@ main {
     z-index: 1;
 }
 
+/* ===== Hero ===== */
 .Top {
     min-height: calc(100vh - 32px);
+    min-height: calc(100dvh - 32px);
     display: grid;
     place-items: center;
-    padding: 118px 18px 48px;
+    padding: clamp(96px, 16vw, 118px) var(--gutter) 48px;
 }
 
 .hero-card {
     width: min(820px, 100%);
     margin: 0 auto;
-    padding: 30px 22px 26px;
-    border-radius: var(--radius);
+    padding: clamp(24px, 5vw, 30px) var(--pad) clamp(22px, 4vw, 26px);
+    border-radius: 0;
     border: 1px solid rgba(255, 255, 255, 0.09);
     background:
         radial-gradient(circle at top, rgba(200, 50, 45, 0.24), transparent 42%),
@@ -171,23 +195,24 @@ main {
     margin: 0 0 10px;
     color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 0.34em;
-    font-size: 0.72rem;
+    letter-spacing: clamp(0.18em, 1.2vw, 0.34em);
+    font-size: clamp(0.64rem, 1.8vw, 0.72rem);
     font-weight: 800;
 }
 
 h1 {
     margin: 0;
     font-family: 'Sprite Graffiti', 'Montserrat', sans-serif;
-    font-size: clamp(2.7rem, 8vw, 5rem);
+    font-size: clamp(2.3rem, 9vw + 0.2rem, 5rem);
     line-height: 0.94;
     letter-spacing: 0.04em;
     color: #fff4ea;
     text-shadow: 0 0 24px rgba(200, 50, 45, 0.32);
+    overflow-wrap: anywhere;
 }
 
 .pulse-logo {
-    width: min(230px, 60vw);
+    width: min(230px, 55vw);
     margin: 18px auto 14px;
     filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
     animation: float 6s ease-in-out infinite;
@@ -196,7 +221,7 @@ h1 {
 .tagline {
     margin: 0;
     color: var(--gold);
-    font-size: clamp(0.92rem, 2vw, 1.08rem);
+    font-size: clamp(0.85rem, 2.4vw, 1.08rem);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -206,7 +231,7 @@ h1 {
     max-width: 620px;
     margin: 10px auto 0;
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: clamp(0.9rem, 2.2vw, 0.95rem);
 }
 
 .hero-actions {
@@ -222,12 +247,14 @@ h1 {
     align-items: center;
     justify-content: center;
     min-width: 132px;
-    padding: 11px 15px;
-    border-radius: 8px;
+    min-height: 44px;
+    padding: 11px 18px;
+    border-radius: 0;
     font-weight: 800;
     letter-spacing: 0.04em;
     border: 1px solid transparent;
     font-size: 0.9rem;
+    text-align: center;
 }
 
 .primary-action {
@@ -247,8 +274,9 @@ h1 {
     transform: translateY(-2px);
 }
 
+/* ===== Layout ===== */
 .section-shell {
-    width: min(980px, calc(100% - 32px));
+    width: min(980px, calc(100% - (var(--gutter) * 2)));
     margin: 0 auto;
 }
 
@@ -263,7 +291,7 @@ h1 {
 .split-shell {
     display: grid;
     grid-template-columns: 0.95fr 1.05fr;
-    gap: 18px;
+    gap: var(--gap);
     align-items: center;
 }
 
@@ -280,9 +308,9 @@ h1 {
 .section-heading h2 {
     margin: 0;
     color: #fff2e6;
-    font-size: clamp(1.5rem, 4vw, 2.3rem);
-    line-height: 1.05;
-    letter-spacing: 0.08em;
+    font-size: clamp(1.35rem, 5vw, 2.3rem);
+    line-height: 1.1;
+    letter-spacing: clamp(0.04em, 0.6vw, 0.08em);
     text-transform: uppercase;
 }
 
@@ -292,7 +320,7 @@ h1 {
     width: 72px;
     height: 3px;
     margin: 10px auto 0;
-    border-radius: 999px;
+    border-radius: 0;
     background: linear-gradient(90deg, transparent, var(--red), var(--gold), transparent);
 }
 
@@ -308,9 +336,9 @@ h1 {
 }
 
 .about-content {
-    padding: 20px;
+    padding: var(--pad);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: 0;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
     box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
 }
@@ -326,23 +354,24 @@ h1 {
     color: var(--muted);
 }
 
+/* min(…, 100%) stops grids overflowing on very narrow screens */
 .CategoryGrid,
 .InfoGrid,
 .RosterGrid {
     display: grid;
-    gap: 16px;
+    gap: var(--gap);
 }
 
 .CategoryGrid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 }
 
 .InfoGrid {
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
 }
 
 .RosterGrid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 }
 
 .CategoryCard,
@@ -350,8 +379,8 @@ h1 {
 .RosterCard {
     position: relative;
     overflow: hidden;
-    padding: 20px;
-    border-radius: var(--radius);
+    padding: var(--pad);
+    border-radius: 0;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background:
         radial-gradient(circle at top right, rgba(200, 50, 45, 0.12), transparent 38%),
@@ -359,10 +388,11 @@ h1 {
     box-shadow: var(--shadow);
 }
 
+/* ===== Roster ===== */
 .roster-showcase {
     display: grid;
-    gap: 18px;
-    padding: 24px;
+    gap: var(--gap);
+    padding: clamp(18px, 4vw, 24px);
     background:
         radial-gradient(circle at top left, rgba(244, 200, 79, 0.14), transparent 30%),
         radial-gradient(circle at bottom right, rgba(200, 50, 45, 0.14), transparent 34%),
@@ -382,21 +412,23 @@ h1 {
 
 .roster-intro h3 {
     margin: 0;
-    font-size: clamp(1.45rem, 3vw, 2rem);
+    font-size: clamp(1.3rem, 4vw, 2rem);
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
+/* Auto-fit replaces the fixed 4 -> 2 -> 1 column jumps */
 .OwnerGrid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
     gap: 14px;
 }
 
 .OwnerTile {
+    min-width: 0;
     padding: 18px 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius);
+    border-radius: 0;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
@@ -429,7 +461,7 @@ h1 {
     margin: 0;
     color: #fff6ee;
     font-size: 1.2rem;
-    line-height: 1.05;
+    line-height: 1.1;
 }
 
 .OwnerTile p {
@@ -473,6 +505,7 @@ h1 {
     font-weight: 600;
 }
 
+/* ===== Cards ===== */
 .CategoryCard {
     min-height: 100%;
     isolation: isolate;
@@ -512,7 +545,7 @@ h1 {
     gap: 8px;
     margin-bottom: 12px;
     padding: 6px 10px;
-    border-radius: 6px;
+    border-radius: 0;
     color: var(--gold);
     background: var(--gold-soft);
     border: 1px solid rgba(244, 200, 79, 0.14);
@@ -527,8 +560,8 @@ h1 {
 .RosterCard h3 {
     margin: 0 0 10px;
     color: #fff5ec;
-    font-size: 1.25rem;
-    line-height: 1.1;
+    font-size: clamp(1.1rem, 3vw, 1.25rem);
+    line-height: 1.15;
 }
 
 .category-copy,
@@ -563,7 +596,7 @@ h1 {
     left: 0;
     width: 7px;
     height: 7px;
-    border-radius: 8px;
+    border-radius: 0;
     background: linear-gradient(180deg, var(--red), var(--gold));
     transform: translateY(-50%);
 }
@@ -584,9 +617,10 @@ h1 {
     border: 0;
 }
 
+/* ===== Footer ===== */
 .Footer {
     margin-top: 28px;
-    padding: 32px 18px 36px;
+    padding: 32px var(--gutter) max(36px, env(safe-area-inset-bottom));
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     background: linear-gradient(180deg, rgba(14, 10, 12, 0.76), rgba(9, 6, 7, 0.98));
     text-align: center;
@@ -600,7 +634,7 @@ h1 {
 .Footer h3 {
     margin: 0 0 14px;
     color: #fff2e6;
-    font-size: clamp(1.2rem, 2.6vw, 1.65rem);
+    font-size: clamp(1.1rem, 3.5vw, 1.65rem);
 }
 
 .social-links {
@@ -612,9 +646,9 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 42px;
-    padding: 0 16px;
-    border-radius: 999px;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 0;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.05);
     color: var(--gold);
@@ -645,102 +679,11 @@ h1 {
     }
 }
 
-@media (max-width: 900px) {
-    .OwnerGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .Top {
-        min-height: auto;
-        padding-top: 108px;
-    }
-
-    .split-shell {
-        grid-template-columns: 1fr;
-    }
-
-    .left-align {
-        text-align: center;
-    }
-
-    .left-align h2::after {
-        margin-left: auto;
-    }
-
-}
-
-@media (max-width: 560px) {
-    .OwnerGrid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 640px) {
-    .NavBar {
-        top: 10px;
-        padding-inline: 10px;
-    }
-
-    .nav-shell {
-        padding: 8px 10px;
-        border-radius: 24px;
-    }
-
-    .NavBar ul {
-        gap: 8px;
-    }
-
-    .NavBar a {
-        min-height: 32px;
-        padding: 0 10px;
-        font-size: 0.74rem;
-    }
-
-    .hero-card {
-        padding: 26px 16px 22px;
-    }
-
-    .hero-copy {
-        font-size: 0.96rem;
-    }
-
-    .section-shell {
-        width: min(1180px, calc(100% - 28px));
-    }
-
-    .About,
-    .MembersSection,
-    .CategorySection,
-    .InfoSection {
-        padding-top: 16px;
-    }
-
-    .CategoryCard,
-    .InfoCard,
-    .RosterCard,
-    .about-content {
-        padding: 18px;
-    }
-
-    .roster-showcase {
-        padding: 18px;
-    }
-
-    .category-list li,
-    .members-list li {
-        font-size: 0.9rem;
-    }
-
-    .Footer {
-        margin-top: 36px;
-        padding-bottom: 42px;
-    }
-}
-
 /* ===== Rankings ===== */
 .rank-pos {
     display: inline-grid;
     place-items: center;
+    flex: 0 0 auto;
     width: 26px;
     height: 26px;
     border-radius: 50%;
@@ -755,9 +698,10 @@ h1 {
 .rank-pos.pos-3 { color: #1a0f08; background: #c98a55; }
 
 .rank-avatar {
+    flex: 0 0 auto;
     width: 34px;
     height: 34px;
-    border-radius: 8px;
+    border-radius: 0;
     object-fit: cover;
     background: rgba(255, 255, 255, 0.06);
 }
@@ -769,7 +713,7 @@ h1 {
 }
 
 .rankings-card {
-    padding: 22px;
+    padding: clamp(14px, 3.5vw, 22px);
 }
 
 .ranking-toolbar {
@@ -782,13 +726,16 @@ h1 {
 
 .ranking-toolbar .rank-status {
     margin: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .rank-refresh {
     flex: 0 0 auto;
+    min-height: 40px;
     padding: 9px 16px;
     border: 1px solid rgba(244, 200, 79, 0.45);
-    border-radius: 8px;
+    border-radius: 0;
     color: var(--gold);
     background: var(--gold-soft);
     font: inherit;
@@ -814,9 +761,9 @@ h1 {
 }
 
 .rank-tabs button {
-    min-height: 38px;
+    min-height: 40px;
     padding: 0 16px;
-    border-radius: 8px;
+    border-radius: 0;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.04);
     color: var(--muted);
@@ -824,6 +771,7 @@ h1 {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .rank-tabs button:hover { color: var(--text); }
@@ -834,7 +782,11 @@ h1 {
     border-color: transparent;
 }
 
-.rank-scroll { overflow-x: auto; }
+.rank-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+}
 
 .rank-table {
     width: 100%;
@@ -849,6 +801,7 @@ h1 {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     border-bottom: 1px solid var(--line);
+    white-space: nowrap;
 }
 
 .rank-table td {
@@ -865,18 +818,26 @@ h1 {
 
 .rank-table td.num {
     text-align: right;
-}
-
-.rank-table td.num {
     color: var(--gold);
     font-weight: 800;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.rank-table th.num-head { text-align: right; }
+
+.rank-table td.rank-date {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .rank-member {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    min-width: 0;
 }
 
 .rank-card-head { margin-bottom: 16px; }
@@ -897,37 +858,440 @@ h1 {
 
 .clan-card { margin-top: 20px; }
 
-.rank-table th.num-head { text-align: right; }
-
-.rank-table td.rank-date {
-    color: var(--muted);
-    font-size: 0.85rem;
-    font-weight: 500;
-    white-space: nowrap;
+.clan-standings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
 }
 
-.clan-cat { font-weight: 800; }
+.clan-ladder-card {
+    --ladder-accent: var(--red);
+    position: relative;
+    min-width: 0;
+    padding: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background:
+        linear-gradient(115deg, rgba(200, 50, 45, 0.1), transparent 48%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    box-shadow: inset 3px 0 var(--ladder-accent);
+}
 
-.clan-pos {
-    display: inline-flex;
+.clan-ladder-card.is-top-three {
+    --ladder-accent: var(--gold);
+    background:
+        linear-gradient(115deg, rgba(244, 200, 79, 0.11), transparent 48%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+}
+.clan-ladder-card.is-unranked,
+.clan-ladder-card.is-unavailable { --ladder-accent: var(--muted-strong); }
+
+.clan-ladder-head,
+.clan-ladder-category {
+    display: flex;
     align-items: center;
-    gap: 8px;
 }
 
-.clan-of, .clan-unranked {
+.clan-ladder-head {
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.clan-ladder-category { gap: 9px; min-width: 0; }
+
+.clan-ladder-index {
+    color: var(--ladder-accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+}
+
+.clan-ladder-category h4 {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.clan-ladder-status {
+    flex: 0 0 auto;
+    padding: 4px 7px;
+    border: 1px solid rgba(200, 50, 45, 0.34);
+    color: var(--ladder-accent);
+    background: rgba(200, 50, 45, 0.1);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.clan-ladder-card.is-top-three .clan-ladder-status {
+    border-color: rgba(244, 200, 79, 0.34);
+    background: rgba(244, 200, 79, 0.1);
+}
+
+.clan-ladder-card.is-unranked .clan-ladder-status,
+.clan-ladder-card.is-unavailable .clan-ladder-status {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.clan-ladder-position {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    column-gap: 8px;
+    margin: 20px 0 14px;
+}
+
+.clan-ladder-label {
+    grid-column: 1 / -1;
+    color: var(--muted-strong);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.clan-ladder-position strong {
+    color: #fff3e4;
+    font-size: clamp(2rem, 5vw, 2.7rem);
+    line-height: 1.08;
+    letter-spacing: -0.06em;
+    font-variant-numeric: tabular-nums;
+}
+
+.clan-ladder-card.is-top-three .clan-ladder-position strong {
+    color: var(--gold);
+    text-shadow: 0 0 24px rgba(244, 200, 79, 0.18);
+}
+
+.clan-ladder-total {
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     font-weight: 600;
 }
 
-@media (max-width: 640px) {
-    .rankings-card { padding: 16px; }
+.clan-ladder-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+}
 
-    .ranking-toolbar {
-        align-items: flex-start;
+.clan-ladder-stats div {
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.16);
+}
+
+.clan-ladder-stats dt,
+.clan-ladder-updated span {
+    color: var(--muted-strong);
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.clan-ladder-stats dd {
+    margin: 2px 0 0;
+    overflow-wrap: anywhere;
+    color: var(--gold);
+    font-size: 0.92rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.clan-ladder-updated {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3px 8px;
+    margin: 12px 0 0;
+    color: var(--muted);
+    font-size: 0.72rem;
+}
+
+/* ===================================================
+   Responsive
+   =================================================== */
+
+/* Tablets and below */
+@media (max-width: 900px) {
+    :root { --nav-offset: 78px; }
+
+    .Top {
+        min-height: auto;
+        padding-top: 104px;
     }
 
-    .ranking-toolbar .rank-status {
+    .split-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .left-align {
+        text-align: center;
+    }
+
+    .left-align h2::after {
+        margin-left: auto;
+    }
+}
+
+/* Large phones */
+@media (max-width: 640px) {
+    :root { --nav-offset: 68px; }
+
+    .NavBar {
+        top: max(10px, env(safe-area-inset-top));
+    }
+
+    .nav-shell {
+        padding: 6px;
+    }
+
+    /* Single swipeable row instead of a wrapped, tall nav */
+    .NavBar ul {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .NavBar ul::-webkit-scrollbar { display: none; }
+
+    .NavBar li { flex: 0 0 auto; }
+
+    .NavBar a {
+        min-height: 40px;
+        padding: 0 12px;
+        font-size: 0.74rem;
+    }
+
+    .hero-card {
+        padding: 26px 16px 22px;
+    }
+
+    .hero-copy {
+        font-size: 0.92rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-link {
+        width: 100%;
+    }
+
+    .About,
+    .MembersSection,
+    .CategorySection,
+    .InfoSection,
+    .RankingsSection {
+        padding-top: 14px;
+    }
+
+    .section-heading {
+        margin-bottom: 14px;
+    }
+
+    .category-list li,
+    .members-list li {
+        font-size: 0.9rem;
+    }
+
+    .InfoCard {
+        min-height: 0;
+    }
+
+    /* Tabs scroll sideways on one line */
+    .rank-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        margin-inline: calc(var(--pad) * -1);
+        padding-inline: var(--pad);
+    }
+
+    .rank-tabs::-webkit-scrollbar { display: none; }
+
+    .rank-tabs button {
+        flex: 0 0 auto;
+        padding: 0 14px;
+    }
+
+    .ranking-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .rank-refresh {
+        width: 100%;
+    }
+
+    .rank-table th,
+    .rank-table td {
+        padding: 8px 6px;
+        font-size: 0.82rem;
+    }
+
+    .clan-standings-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .clan-ladder-card {
+        padding: 8px 6px;
+        box-shadow: inset 2px 0 var(--ladder-accent);
+    }
+
+    .clan-ladder-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .clan-ladder-category {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .clan-ladder-index,
+    .clan-ladder-status {
+        font-size: 0.5rem;
+    }
+
+    .clan-ladder-category h4 {
+        font-size: 0.62rem;
+        line-height: 1.15;
         overflow-wrap: anywhere;
+    }
+
+    .clan-ladder-status {
+        padding: 2px 4px;
+        letter-spacing: 0.04em;
+    }
+
+    .clan-ladder-position {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .clan-ladder-label {
+        font-size: 0.48rem;
+        letter-spacing: 0.05em;
+        line-height: 1.2;
+    }
+
+    .clan-ladder-position strong {
+        display: block;
+        margin: 2px 0;
+        font-size: 1.55rem;
+    }
+
+    .clan-ladder-total {
+        display: block;
+        font-size: 0.55rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .clan-ladder-stats {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .clan-ladder-stats div {
+        padding: 4px;
+    }
+
+    .clan-ladder-stats dt,
+    .clan-ladder-updated span {
+        font-size: 0.48rem;
+        letter-spacing: 0.04em;
+    }
+
+    .clan-ladder-stats dd {
+        font-size: 0.68rem;
+        line-height: 1.2;
+    }
+
+    .clan-ladder-updated {
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 8px;
+        font-size: 0.52rem;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .rank-avatar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .Footer {
+        margin-top: 36px;
+    }
+
+    .discord-link {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    :root {
+        --gutter: 12px;
+        --pad: 14px;
+    }
+
+    .owner-avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .category-badge {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+    }
+
+    .rank-member {
+        gap: 8px;
+    }
+
+    .rank-table td.rank-date {
+        font-size: 0.78rem;
+    }
+}
+
+/* Short landscape phones: don't force a full-height hero */
+@media (max-height: 500px) and (orientation: landscape) {
+    .Top {
+        min-height: auto;
+        padding-top: 84px;
+    }
+}
+
+/* Respect users who turn off motion */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
 }
