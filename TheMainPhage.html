@@ -15,10 +15,10 @@
             <ul>
                 <li><a href="#home" aria-label="Home">Top</a></li>
                 <li><a href="#categories" aria-label="Categories">Categories</a></li>
-                <li><a href="#members" aria-label="Roster">Roster</a></li>
+                <li><a href="#members" aria-label="Leadership">Leadership</a></li>
+                <li><a href="#rankings" aria-label="Rankings">Rankings</a></li>
                 <li><a href="#info" aria-label="Info">Info</a></li>
                 <li><a href="#about" aria-label="About">About</a></li>
-                <li><a href="http://localhost:3000" aria-label="Clan Chat" target="_blank" rel="noreferrer">Chat</a></li>
                 <li><a href="#contact" aria-label="Contact">Discord</a></li>
             </ul>
         </div>
@@ -34,8 +34,7 @@
                 <p class="hero-copy">A focused clan structure with strong leadership, clean roles, and a tighter layout that keeps everything clear.</p>
                 <div class="hero-actions">
                     <a href="#categories" class="action-link primary-action">View Roles</a>
-                    <a href="#members" class="action-link secondary-action">See Roster</a>
-                    <a href="http://localhost:3000" class="action-link secondary-action" target="_blank" rel="noreferrer">Open Clan Chat</a>
+                    <a href="#rankings" class="action-link secondary-action">Full Rankings</a>
                     <a href="#contact" class="action-link secondary-action">Join Discord</a>
                 </div>
             </div>
@@ -89,61 +88,108 @@
             <div class="section-shell">
                 <div class="section-heading">
                     <h2>Leadership Roster</h2>
-                    <p>Verified owner and high council records pulled from the leadership accounts you provided.</p>
+                    <p>The Owners of The Viltrum Syndicate, with live ratings from the game.</p>
                 </div>
                 <article class="RosterCard OverlordCard roster-showcase">
                     <div class="roster-intro">
                         <span class="category-badge">Command Records</span>
                         <h3>Verified Leadership</h3>
-                        <p class="category-copy">This section now uses the real leadership profile data instead of placeholder names, keeping the page focused on owners and top command only.</p>
+                        <p class="category-copy">Four owners, one direction. Ratings refresh from the game API when the page loads or you refresh rankings.</p>
                     </div>
                     <div class="OwnerGrid">
-                        <article class="OwnerTile">
+                        <article class="OwnerTile" data-user="GGamer704">
+                            <img class="owner-avatar" data-avatar alt="" loading="lazy" hidden>
                             <span class="owner-rank">Owner</span>
                             <h4>GGamer</h4>
                             <p class="owner-handle">@GGamer704</p>
                             <dl class="owner-meta">
                                 <div>
                                     <dt>Best Rating</dt>
-                                    <dd>2108.095</dd>
+                                    <dd data-best>2108.095</dd>
                                 </div>
                                 <div>
                                     <dt>Top Queue</dt>
-                                    <dd>Solo Slow</dd>
+                                    <dd data-queue>Solo Slow</dd>
                                 </div>
                             </dl>
                         </article>
-                        <article class="OwnerTile">
+                        <article class="OwnerTile" data-user="SirZayn">
+                            <img class="owner-avatar" data-avatar alt="" loading="lazy" hidden>
                             <span class="owner-rank">Owner</span>
                             <h4>SirZayn</h4>
                             <p class="owner-handle">@SirZayn</p>
                             <dl class="owner-meta">
                                 <div>
                                     <dt>Best Rating</dt>
-                                    <dd>2500.542</dd>
+                                    <dd data-best>2500.542</dd>
                                 </div>
                                 <div>
                                     <dt>Top Queue</dt>
-                                    <dd>Gang Slow</dd>
+                                    <dd data-queue>Gang Slow</dd>
                                 </div>
                             </dl>
                         </article>
-                        <article class="OwnerTile">
+                        <article class="OwnerTile" data-user="Daltonvee">
+                            <img class="owner-avatar" data-avatar alt="" loading="lazy" hidden>
                             <span class="owner-rank">Owner</span>
                             <h4>DaltoniusAurelius</h4>
                             <p class="owner-handle">@Daltonvee</p>
                             <dl class="owner-meta">
                                 <div>
                                     <dt>Best Rating</dt>
-                                    <dd>1671.801</dd>
+                                    <dd data-best>1671.801</dd>
                                 </div>
                                 <div>
                                     <dt>Top Queue</dt>
-                                    <dd>Solo Slow</dd>
+                                    <dd data-queue>Solo Slow</dd>
+                                </div>
+                            </dl>
+                        </article>
+                        <article class="OwnerTile" data-user="SPitF1RE">
+                            <img class="owner-avatar" data-avatar alt="" loading="lazy" hidden>
+                            <span class="owner-rank">Owner</span>
+                            <h4>SPitF1RE</h4>
+                            <p class="owner-handle">@SPitF1RE</p>
+                            <dl class="owner-meta">
+                                <div>
+                                    <dt>Best Rating</dt>
+                                    <dd data-best>&mdash;</dd>
+                                </div>
+                                <div>
+                                    <dt>Top Queue</dt>
+                                    <dd data-queue>&mdash;</dd>
                                 </div>
                             </dl>
                         </article>
                     </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="RankingsSection" id="rankings">
+            <div class="section-shell">
+                <div class="section-heading">
+                    <h2>Clan Rankings</h2>
+                    <p>Player ratings by category, plus where the clan stands on every ladder.</p>
+                </div>
+                <div class="ranking-toolbar">
+                    <p id="rank-updated" class="rank-status" aria-live="polite">Loading rankings&hellip;</p>
+                    <button id="rank-refresh" class="rank-refresh" type="button">Refresh</button>
+                </div>
+                <article class="RosterCard rankings-card">
+                    <div class="rank-card-head">
+                        <h3>Player Rankings</h3>
+                        <p>Top clan members in each queue.</p>
+                    </div>
+                    <div class="rank-tabs" id="rank-tabs" role="tablist" aria-label="Player ranking categories"></div>
+                    <div id="rank-table" aria-live="polite"><p class="rank-status">Loading rankings&hellip;</p></div>
+                </article>
+                <article class="RosterCard rankings-card clan-card">
+                    <div class="rank-card-head">
+                        <h3>Clan Standings</h3>
+                        <p>Where The Viltrum Syndicate sits on each clan ladder.</p>
+                    </div>
+                    <div id="clan-table" aria-live="polite"><p class="rank-status">Loading clan standings&hellip;</p></div>
                 </article>
             </div>
         </section>
@@ -176,11 +222,11 @@
         <div class="footer-content">
             <h3>Connect With Us</h3>
             <div class="social-links">
-                <a href="http://localhost:3000" target="_blank" rel="noreferrer" aria-label="Clan Chat" class="discord-link">Clan Chat</a>
                 <a href="https://discord.com" target="_blank" rel="noreferrer" aria-label="Discord" class="discord-link">Discord</a>
             </div>
-            <p class="copyright">(c) 2025 The Game Clan. All rights reserved. Start the chat with <code>npm start</code> inside <code>clan-chat</code>.</p>
+            <p class="copyright">(c) 2025 The Game Clan. All rights reserved.</p>
         </div>
     </footer>
+    <script src="rankings.js"></script>
 </body>
 </html>
