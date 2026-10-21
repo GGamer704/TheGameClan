@@ -40,11 +40,11 @@ const CONFIG = {
     { name: 'jhonz09' },
     { name: 'Christoph85360' },
     { name: 'POOYAN1212' },
-    { name: 'hossein69646' },
+    { name: 'Hossein45@Google' },
     { name: 'the18' },
-    { name: 'Nidhi' },
+    { name: 'Nidhi6267' },
     { name: 'Ercilios' },
-    { name: 'jagdish' },
+    { name: 'Jagdish30' },
     { name: 'sochen' },
     { name: 'gt0007' },
     { name: 'KAJ21' },
@@ -57,7 +57,11 @@ const CONFIG = {
     { name: 'Christopher24858' },
     { name: 'KOMOREBI' },
     { name: 'AdmiralButtNaked' },
-    { name: 'NightArgos' }
+    { name: 'NightArgos' },
+    { name: '~000170FA20455B' },
+    { name: 'The555336' },
+    { name: '881257964' },
+    { name: '624918023' }
   ],
   categories: CATEGORY_KINDS.map((category) => ({ ...category, type: 'U' }))
 };
@@ -86,10 +90,7 @@ async function resolveIds() {
     if (id == null) throw new Error('no id');
     return { ...m, id: String(id) };
   }));
-  return {
-    members: out.filter((r) => r.status === 'fulfilled').map((r) => r.value),
-    unresolved: out.flatMap((r, i) => r.status === 'rejected' ? [CONFIG.members[i].name] : [])
-  };
+  return out.filter((r) => r.status === 'fulfilled').map((r) => r.value);
 }
 
 async function loadCategory(cat, members) {
@@ -178,7 +179,7 @@ const formatUpdated = (value) => Number.isFinite(value) && value > 0
   ? new Date(value).toLocaleString()
   : '—';
 
-function renderPlayers(results, unresolved) {
+function renderPlayers(results) {
   const tabs = $('#rank-tabs');
   const show = (idx) => {
     [...tabs.children].forEach((b, i) => b.setAttribute('aria-selected', i === idx));
@@ -192,10 +193,7 @@ function renderPlayers(results, unresolved) {
         }).join('')}
         </tbody></table></div>`
       : `<p class="rank-status">${pending ? 'This category is not linked to the game API yet.' : 'No ratings found for this category.'}</p>`;
-    const unresolvedNote = unresolved.length
-      ? `<p class="rank-status">Could not resolve these usernames; check their spelling or try again later: ${unresolved.map(esc).join(', ')}</p>`
-      : '';
-    $('#rank-table').innerHTML = content + unresolvedNote;
+    $('#rank-table').innerHTML = content;
   };
   tabs.innerHTML = results.map((r, i) => `<button role="tab" type="button" aria-selected="${i === 0}">${esc(r.cat.label)}</button>`).join('');
   [...tabs.children].forEach((b, i) => b.addEventListener('click', () => show(i)));
@@ -246,14 +244,14 @@ async function refreshRankings() {
   updated.textContent = 'Refreshing rankings…';
   try {
     if (!resolvedRoster) resolvedRoster = resolveIds();
-    const { members, unresolved } = await resolvedRoster;
+    const members = await resolvedRoster;
     if (!members.length) throw new Error('No clan members could be resolved');
     const [serverTime, clanStandings, ...results] = await Promise.all([
       getJSON('/api/user-db/io-user/rw/run-sync'),
       loadClanStandings(),
       ...CONFIG.categories.map((category) => loadCategory(category, members))
     ]);
-    renderPlayers(results, unresolved);
+    renderPlayers(results);
     renderClan(clanStandings);
     fillOwners(results, members);
     const timestamp = Number(serverTime.time);
